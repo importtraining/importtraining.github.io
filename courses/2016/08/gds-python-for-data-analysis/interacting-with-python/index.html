@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+    <title>Python for Data Analysis: Interacting with Python</title>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arvo:400,700|Open+Sans"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/static/css/style.css" rel="stylesheet"></link>
+    <link href="/static/img/favicon.ico" rel="shortcut icon"></link>
+  </head>
+  <body>
+    <header class="head">
+      <nav class="section nav">
+        <h1 class="logo"><a href="/">Import Training</a></h1>
+      </nav>
+    </header>
+
+    <section id="baseline">
+      <div class="section typeset">
+        <div class="single">
+          
+
+<h1>Python for Data Analysis</h1>
+
+<h2>Interacting with Python</h2>
+
+<p>We're going to begin by getting comfortable with Python's interactive interpreter.</p>
+
+<blockquote>
+  <blockquote>
+    <p>From your command line, run <code>python</code>.</p>
+  </blockquote>
+</blockquote>
+
+<p>You should see something that looks like this:</p>
+
+<pre><code>$ python
+Python 3.5.1 (default, Apr  5 2016, 19:54:51) 
+[GCC 4.2.1 Compatible Apple LLVM 7.3.0 (clang-703.0.29)] on darwin
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt;
+</code></pre>
+
+<p>This starts a session with Python's interactive interpreter.</p>
+
+<blockquote>
+  <blockquote>
+    <p>Check that it's working by entering a calculation (something like <code>1 + 2 + 3</code>) and hitting &lt;enter&gt;.</p>
+  </blockquote>
+</blockquote>
+
+<p>You should see something that looks like this:</p>
+
+<pre><code>&gt;&gt;&gt; 1 + 2 + 3
+6
+</code></pre>
+
+<p>The most important thing to know about the Python interactive interpreter is how to quit it!</p>
+
+<blockquote>
+  <blockquote>
+    <p>Type <code>exit()</code> and hit &lt;enter&gt;.</p>
+  </blockquote>
+</blockquote>
+
+<pre><code>&gt;&gt;&gt; exit()
+$
+</code></pre>
+
+<p>In the examples that follow, any line beginning with a triple greater-than sign (<code>&gt;&gt;&gt;</code>) indicates that the line is input for the Python interactive interpreter.  Any line beginning with a dollar sign (<code>$</code>) indicates that the line is input for the operating system command line.</p>
+
+<p>Before we go further, check that you're running Python 3.  When we start the Python interactive interpreter, some text is displayed on the screen.  The first line shows the version of Python that you're using.  You should see "Python 3.4.z" or "Python 3.5.z".  If you see "Python 2.y.z", try quitting the Python interactive interpreter, and try running <code>python3</code>.</p>
+
+<p>We can use the Python interactive interpreter to do quick calculations, to do one-off bits of data processing work, and to try out ideas.</p>
+
+<blockquote>
+  <blockquote>
+    <p>Here is a list of lots of lines to enter into the Python interactive interpreter.  Try each one out, and make sure you understand the result.</p>
+  </blockquote>
+</blockquote>
+
+<pre><code>20 - 10
+20 + -10
+20 - +10
+20 - -10
+100 / 5
+100 / 6
+100 // 5
+100 // 6
+2 ** 3
+3 ** 2
+4 % 3
+5 % 3
+6 % 3
+7 % 3
+type(20)
+type(20.5)
+type(20.0)
+int(20.5)
+float(20)
+str(20)
+n = 10
+n
+n + 1
+n = n + 1
+n
+n += 1
+n
+m = 8
+n + m
+m &gt; n
+n &gt; m
+m &lt; n
+n &gt; m
+m &gt;= 8
+m == 8
+m == 9
+m
+p = 11
+q = p
+p = 13
+p
+q
+name = "Rumplestiltskin"
+name * 3
+len(name)
+name[0]
+name[1]
+name[10]
+name[100]
+name[-1]
+name[-2]
+name[0:6]
+name[:6]
+name[:-1]
+name[6:12]
+name[6:]
+name[:]
+name[2:10:2]
+name[10:2:-2]
+name[::-1]
+'Hello, {}'.format(name)
+'Hello, %s' % name
+'Hello, ' + name
+'Hello, {}.  There are {} letters in your name'.format(name, len(name))
+name.upper()
+name.lower()
+name.swapcase()
+name.index('t')
+name.index('q')
+name.find('t')
+name.find('q')
+name.rfind('t')
+name.rindex('t')
+'t' in name
+'q' in name
+name.count('t')
+name.count('q')
+name.split('t')
+name.split('s')
+name.split('q')
+name.startswith('Rumple')
+name.startswith('rumple')
+name.ljust(20)
+name.ljust(20, '.')
+name.rjust(20)
+name.rjust(20, '.')
+type(name)
+str(name)
+int(name)
+list(name)
+primes = [2, 3, 5, 7, 11]
+len(primes)
+primes[0]
+primes[1:]
+primes[:3]
+primes[::-1]
+[p + 1 for p in primes]
+[p * 2 for p in primes]
+[p for p in primes if p % 2 == 1]
+[p for p in primes if p &gt; 5]
+[p for p in primes if p &gt; 50]
+primes.append(13)
+primes += [17]
+primes.insert(len(primes), 19)
+primes
+len(primes)
+animals = ['cat', 'fish', 'dog', 'frog']
+len(animals)
+
+for a in animals:
+    print('"{}" has {} letters'.format(a, len(a)))
+
+for a in animals:
+    print('"{}" reversed is "{}"'.format(a, a[::-1]))
+
+[len(a) for a in animals]
+['There are {} letters in "{}"'.format(a, len(a)) for a in animals]
+[a[::-1] for a in animals]
+[a for a in animals if 'o' in a]
+[a for a in animals if len(a) == 3]
+[a for a in animals if a.startswith('f')]
+sorted(animals)
+sorted(animals, reverse=True)
+sorted(animals, key=lambda a: len(a))
+sorted(animals, key=lambda a: len(a), reverse=True)
+sorted(animals, key=lambda a: a[2])
+sorted(animals, key=lambda a: a[::-1])
+person = {'name': 'Theresa', 'job': 'Prime Minister', 'address': '10 Downing Street'}
+len(person)
+person['name']
+person['job']
+person['age']
+person['cat'] = 'Larry'
+person
+person.keys()
+person.values()
+person.items()
+list(person)
+
+for key in person:
+    print('{}: {}'.format(key, person[key]))
+
+for key, value in person.items():
+    print('{}: {}'.format(key, value))
+
+["The person's {} is {}".format(key, value) for key, value in person.items()]
+'name' in person
+'Theresa' in person
+host_to_ip_addr = {'number10.gov.uk': '62.172.97.230', 'whitehouse.gov': '173.223.176.52', 'elysee.fr': '2.127.242.189'}
+'number10.gov.uk' in host_to_ip_addr
+'kremlin.ru' in host_to_ip_addr
+ip_addr_to_host = {ip_addr: host for host, ip_addr in host_to_ip_addr.items()}
+</code></pre>
+
+<p>Before we go further, we should talk about what happens when things go wrong. There are two kinds of errors: syntactic errors, and semantic errors.</p>
+
+<p>A syntactic error occurs when you give Python something to evaluate that it cannot parse. Some examples of syntax errors in English might be:</p>
+
+<p>John kicked the.
+John kicked ball the.
+John kicked theball.</p>
+
+<p>If we give Python something syntactically invalid to evaluate, Python will complain. Type each of the following into the Python interactive interpreter, and try to understand the output:</p>
+
+<pre><code>1 *** 3
+2 * 10)
+[1, 2, 3 4]
+</code></pre>
+
+<p>A semantic error occurs when you give Python something syntactically valid to evaluate, but for some reason Python isn't able to process it. In English, the phrase "John kicked the ball" is syntactically valid, but it might be semantically wrong, if there's no ball, or if John's asleep, or if there are two people called John, or if the ball's on the other side of a fence, or...</p>
+
+<p>The following expressions all give semantic errors. Again, type each of them into the Python interactive interpreter, and try to understand the output:</p>
+
+<pre><code>'abc' + 123
+123 + 'abc'
+len(123)
+xxx + 123
+123 / 0
+'abc'.ljust()
+</code></pre>
+
+<p>As you've seen, when Python encounters an error, it'll display information about that error, which we can use to help us work out what we're doing wrong.</p>
+
+
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="global-footer">
+      <p>&copy; 2016 Import Training. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+

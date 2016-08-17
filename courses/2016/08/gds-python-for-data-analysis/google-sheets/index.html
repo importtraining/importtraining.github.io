@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"></meta>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"></meta>
+    <title>Python for Data Analysis: Google Sheets API</title>
+    <link type="text/css" rel="stylesheet" href="http://fonts.googleapis.com/css?family=Arvo:400,700|Open+Sans"></link>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <link href="/static/css/style.css" rel="stylesheet"></link>
+    <link href="/static/img/favicon.ico" rel="shortcut icon"></link>
+  </head>
+  <body>
+    <header class="head">
+      <nav class="section nav">
+        <h1 class="logo"><a href="/">Import Training</a></h1>
+      </nav>
+    </header>
+
+    <section id="baseline">
+      <div class="section typeset">
+        <div class="single">
+          
+
+<h1>Python for Data Analysis</h1>
+
+<h2>Google Sheets API</h2>
+
+<p>To interact with a Google Spreadsheet using Python, we need to do a bit of setup.</p>
+
+<hr />
+
+<p>Firstly, you will need to have a Google account.  If you do not have one, you can create one at <a href="https://accounts.google.com/">https://accounts.google.com/</a>.</p>
+
+<hr />
+
+<p>Then, you will need to create a Google Project:</p>
+<ul>
+  <li>Go to <a href="https://console.developers.google.com/iam-admin/projects">https://console.developers.google.com/iam-admin/projects</a> and click "Create Project"</li>
+  <img src="/static/img/sheets-screenshots/screenshot-01.png" />
+  <li>Enter a Project name (such as "GDS Training"), set the App Engine location to "europe-west", and click "Create"</li>
+  <img src="/static/img/sheets-screenshots/screenshot-02.png" />
+  <li>Wait a little bit until the screen changes (there's a little spinner in the top right corner, and it may take several tens of seconds)</li>
+</ul>
+
+<hr />
+
+<p>You'll next need to enable the Project's users to use the Sheets API:</p>
+<ul>
+  <li>Click "Sheets API"</li>
+  <img src="/static/img/sheets-screenshots/screenshot-03.png" />
+  <li>Click "Enable"</li>
+  <img src="/static/img/sheets-screenshots/screenshot-04.png" />
+</ul>
+
+<hr />
+
+<p>Now, you will need to get the credentials of the project's default service account.</p>
+  <ul>
+    <li>Click "Go to Credentials"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-05.png" />
+    <li>Click "service account"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-06.png" />
+    <li>Select "App Engine default service account", click the three dots on the right hand side of the selected row, and click "Create key"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-08.png" />
+    <li>Choose "JSON" and click "Create"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-09.png" />
+    <li>Click "Close"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-10.png" />
+</ul>
+
+<hr />
+
+<p>This will download a JSON file that contains a private key that identifies the user.</p>
+<ul>
+  <li>Move the downloaded file to <code>credentials.json</code> in your working directory</li>
+</ul>
+
+<hr />
+
+<p>We can create spreadsheets with the Sheets API, but for now, we're going to see how to use the Sheets API to interact with an existing spreadsheet.</p>
+
+<p>To give access to an existing spreadsheet:</p>
+  <ul>
+    <li>Open the spreadsheet in Drive and click "Share"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-13.png" />
+    <li>Get the email address from the <code>client_email</code> field from the credentials file </li>
+    <img src="/static/img/sheets-screenshots/screenshot-13a.png" />
+    <li>Enter this into text box, ensure "Can edit" is selected, uncheck "Notify people", and click "OK"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-14.png" />
+    <li>Click "OK" when asked about "Skip sending invitations?"</li>
+    <img src="/static/img/sheets-screenshots/screenshot-15.png" />
+    <li>While you're here, record the long string in the URL that identifies the spreadsheet</li>
+    <img src="/static/img/sheets-screenshots/screenshot-16.png" />
+</ul>
+
+<hr />
+
+<p>Finally, you need to install Google's API client library.</p>
+
+<ul>
+  <li><code>$ pip install google-api-python-client</code></li>
+</ul>
+
+<hr />
+
+<p>To interact with the spreadsheet requires a bit of boilerplate, which will be the same for every spreadsheet-using script that you write.</p>
+
+<pre>
+import httplib2
+from oauth2client.service_account import ServiceAccountCredentials
+from apiclient import discovery
+
+scope = ['https://spreadsheets.google.com/feeds']
+
+credentials = ServiceAccountCredentials.from_json_keyfile_name('credentials.json', scope)
+
+http = credentials.authorize(httplib2.Http())
+discovery_url = ('https://sheets.googleapis.com/$discovery/rest?' 'version=v4')
+service = discovery.build('sheets', 'v4', http=http, discoveryServiceUrl=discovery_url)
+
+# You'll need to change this!  Get the value from the 
+spreadsheet_id = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
+</pre>
+
+<p>This code gives you an object called <code>service</code>, which you can use to get and set ranges of values in your spreadsheet.</p>
+
+<p>To get the values in a range:</p>
+
+<pre>
+values = service.spreadsheets().values().get(
+    spreadsheetId=spreadsheet_id,
+    range='Sheet1!A1:B2',
+).execute()['values']
+</pre>
+
+<p>To set the values in a range:</p>
+
+<pre>
+new_values = [[1, 2], [3, 4]]
+service.spreadsheets().values().update(
+    spreadsheetId=spreadsheet_id,
+    range='Sheet1!A1:B2',
+    body={'values': new_values},
+    valueInputOption='RAW',
+).execute()
+</pre>
+
+        </div>
+      </div>
+    </section>
+
+    <footer class="global-footer">
+      <p>&copy; 2016 Import Training. All rights reserved.</p>
+    </footer>
+  </body>
+</html>
+
+
